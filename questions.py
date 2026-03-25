@@ -1,25 +1,34 @@
 import random
-words = [
-    "python",
-    "programa",
-    "variable",
-    "funcion",
-    "bucle",
-    "cadena",
-    "entero",
-    "lista",
-]
 
-word = random.choise (words)
-guessed = []
-attemps = 6
-
+#Consigna 3: se agrupan palabras por categorías. Al principio mostrar las disponibles y permitir elección al usuario. 
+#diccionario: cada clave es una categoria y sus valores una lista de palabras. 
+categorias = {
+    "animales": ["perro", "gato", "elefante", "jirafa", "tigre"],
+    "frutas": ["manzana", "banana", "naranja", "mandarina", "uva"],
+    "paises": ["argentina", "brasil", "uruguay", "chile", "peru"]
+}
 print ("Bienvenido al Ahorcado!")
 print()
 
+#muestra las categorías disponibles.
+print ("Categorías disponibles:")
+for categoria in categorias:
+    print (f"- {categoria}")
+
+print()
+
+#pedir al usuario que elija una, y se pasa a minúscula. 
+categoria_elegida = input ("Elige una categoría: ").lower()
+while categoria_elegida not in categorias:
+    print ("Categoría no válida. Elegí una de las disponibles: animales, frutas o países.")
+    categoria_elegida = input ("Elige una categoría: ").lower()
+
+word = random.choice (categorias[categoria_elegida])     #se elige una palabra al azar de la categoría elegida.
+guessed = []
+attempts = 6
 puntaje = 0         #inicializacion de puntaje 
 
-while attemps > 0:
+while attempts > 0:
     #Mostrar progreso: letras adividads y guiones para las que faltan
     progress =""
     for letter in word:
@@ -34,8 +43,8 @@ while attemps > 0:
         puntaje += 6      #si el jugador adivina la palabra completa, se le suman 6 puntos.
         break
 
-    print (f"Intentos restantes: {attemps})")
-    print (f"Letras usadas: {','.jouin(guessed)}")
+    print (f"Intentos restantes: {attempts}")
+    print (f"Letras usadas: {','.join(guessed)}")
     
     #Primera consigna: se pretende corregir el bug. 
     #Si el usuario ingresa algo incorrecto, se le muestra el mensaje "Entrada no válida. " 
@@ -43,7 +52,6 @@ while attemps > 0:
     if len(letter) != 1 or not letter.isalpha():    #si la extensión de la letra es diferente a 1 o si no es una letra del alfabeto, se muestra el mensaje. 
         print ("Entrada no válida. Por favor, ingresa solo una letra.")
         continue        #con el continue, el usuario no pierde intentos, sino que se le pide que reigrese una letra válida.
-
     #va a continuar solamente si la entrada es una letra del abecedario.
 
     #Consigna 2: mostrar puntaje del jugador. Incorrecta resta 1, palabra completa suma 6, perder deja puntaje en cero.
@@ -54,7 +62,7 @@ while attemps > 0:
         print ("¡Bien! Esa letra está en la palabra.")
     else:
         guessed.append(letter)
-        attemps -= 1
+        attempts -= 1
         puntaje -= 1        #resta 1 por cada letra incorrecta.
         print ("Esa letra no está en la palabra.")
     print()
