@@ -34,8 +34,14 @@ while attemps > 0:
     print (f"Intentos restantes: {attemps})")
     print (f"Letras usadas: {','.jouin(guessed)}")
     
-    letter = input ("Ingresa una letra:")
+    #Primera consigna: se pretende corregir el bug. 
+    #Si el usuario ingresa algo incorrecto, se le muestra el mensaje "Entrada no válida. " 
+    letter = input ("Ingresa una letra: ").lower()
+    if len(letter) != 1 or not letter.isalpha():    #si la extensión de la letra es diferente a 1 o si no es una letra del alfabeto, se muestra el mensaje. 
+        print ("Entrada no válida. Por favor, ingresa solo una letra.")
+        continue        #con el continue, el usuario no pierde intentos, sino que se le pide que reigrese una letra válida.
     
+    #va a continuar solamente si la entrada es una letra del abecedario.
     if letter in guessed:
         print ("Ya usaste esa letra.")
     elif letter in word:
